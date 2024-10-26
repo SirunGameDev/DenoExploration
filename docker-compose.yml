@@ -1,6 +1,6 @@
 services:
   deno:
-    user: ${UID}:${GID}
+    #user: ${UID}:${GID}
     build: ./docker
     image: deno_exploration
     restart: always
