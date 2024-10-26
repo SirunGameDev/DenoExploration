@@ -1,0 +1,16 @@
+services:
+  deno:
+    user: ${UID}:${GID}
+    build: ./docker/deno
+    image: deno_exploration
+    restart: always
+    container_name: exploration_deno_app
+    volumes:
+      - ./app/:/app
+    ports:
+      - 3002:3000
+    expose:
+      - 3000
+    tty: true
+    command:
+      - /bin/sh
