@@ -1,7 +1,7 @@
 services:
   deno:
     user: ${UID}:${GID}
-    build: ./docker/deno
+    build: ./docker
     image: deno_exploration
     restart: always
     container_name: exploration_deno_app
