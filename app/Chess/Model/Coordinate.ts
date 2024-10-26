@@ -4,10 +4,12 @@ export class Coordinate {
     #horizont : number;
     #vertical : number;
     #filling: Piece | string;
-    constructor (horizontal, vertical, filling = "") {
+    comment : string;
+    constructor (horizontal : number, vertical : number, filling = "E", comment : string = "") {
         this.#filling = filling;
         this.#horizont = horizontal;
         this.#vertical = vertical;
+        this.comment = comment;
     }
 
     getFilling() : string {

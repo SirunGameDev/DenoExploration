@@ -1,4 +1,4 @@
-import { Piece } from "./Piece";
+import { Piece } from "./Piece.ts";
 
 export class Knight extends Piece {
     constructor(color, position) {
