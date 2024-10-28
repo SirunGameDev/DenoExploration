@@ -30,7 +30,11 @@ export class GameBoard {
         let strings = ["a", "b", "c", "d", "e", "f", "g", "h"];
         for (let j = 0; j < 8; j++) {
             for (let i = 0; i < 8; i++) {
-                board[counter] = new Coordinate(j, i, "E ", strings[i]+(j+1) );
+                let color = "w";
+                if ((i + j) % 2 == 0) {
+                    color = "b";
+                }
+                board[counter] = new Coordinate(j, i, "E ", strings[i]+(j+1), color );
                 counter++;
             }
         }
@@ -44,16 +48,12 @@ export class GameBoard {
 
         // fill white pawns
         for (let i = 8; i < 16; i++) {
-            let coord = board[i];
-            coord.setFilling(new Pawn ("white", coord));
-            board[i] = coord;
+            board = this.helperToPlacePieces(board, i, "white", Pawn);
         }
 
         // fill black pawns
         for (let i = 48; i < 56; i++) {
-            let coord = board[i];
-            coord.setFilling(new Pawn ("black", coord));
-            board[i] = coord;
+            board = this.helperToPlacePieces(board, i, "black", Pawn);
         }
 
         board = this.helperToPlacePieces(board, 0, "white", Rook);
@@ -94,15 +94,27 @@ export class GameBoard {
     printBoardtoConsole(board = this.#board) {
         for (let square in board) {
             let coord = board[square];
-            console.log(square+":"+coord.getFilling()+" on "+coord.getHorizontal()+" "+coord.getVertical()+" "+coord.comment);
+            let colorstring = this.getColorofPiece(coord);
+
+            let string = square+": "+colorstring+coord.getFilling()+" on "+coord.getHorizontal()+" "+coord.getVertical()+" "+coord.comment+coord.color
+
+            console.log(string);
         }
+    }
+    getColorofPiece (coord) {
+        let colorstring = "";
+        if (coord.getPiece()) {
+            colorstring = coord.getPiece().getColor()[0] + " ";
+        }
+        return colorstring;
     }
     printBoardAsString(board = this.#board) {
         let result = "";
-        for( let i = 63; i >= 0; i--) {
+        for( let i = 0; i < 64; i++) {
             let coord = board[i];
-            result = coord.getFilling()+" "+result;
-            if ( (i) % 8 == 0)
+            let colorstring = this.getColorofPiece(coord);
+            result = colorstring+coord.getFilling()+" "+coord.color+result;
+            if ( (i+1) % 8 == 0)
             {
                 result = "\n"+result;
             }
@@ -121,4 +133,6 @@ const arrayRange = (start : number, stop : number, step : number) =>
     );
 
 let testboard = new GameBoard();
+testboard.printBoardtoConsole();
 testboard.printBoardAsString();
+

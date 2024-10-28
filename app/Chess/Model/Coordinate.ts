@@ -5,11 +5,13 @@ export class Coordinate {
     #vertical : number;
     #filling: Piece | string;
     comment : string;
-    constructor (horizontal : number, vertical : number, filling = "E", comment : string = "") {
+    color: string;
+    constructor (horizontal : number, vertical : number, filling = "E", comment : string = "", color = "w") {
         this.#filling = filling;
         this.#horizont = horizontal;
         this.#vertical = vertical;
         this.comment = comment;
+        this.color = color;
     }
 
     getFilling() : string {
@@ -28,5 +30,16 @@ export class Coordinate {
     }
     getVertical () {
         return this.#vertical;
+    }
+
+    getPiece() : Piece | false {
+        if (typeof this.#filling == "string") {
+            return false;
+        }
+        return this.#filling;
+    }
+
+    getComment() : string {
+        return this.comment;
     }
 }
