@@ -145,14 +145,14 @@ const arrayRange = (start : number, stop : number, step : number) =>
     (value, index) => start + index * step
     );
 
-let testboard = new GameBoard();
+//let testboard = new GameBoard();
 //testboard.printBoardtoConsole();
 //testboard.printBoardAsStringBoardtoTerminal();
-let horizontal = testboard.filterBoardbyDirection("horizontal", testboard.getBoard()[0]);
-console.log(horizontal);
+//let horizontal = testboard.filterBoardbyDirection("horizontal", testboard.getBoard()[0]);
+//console.log(horizontal);
 
-let vertical = testboard.filterBoardbyDirection("vertical", testboard.getBoard()[0]);
-console.log(vertical);
+//let vertical = testboard.filterBoardbyDirection("vertical", testboard.getBoard()[0]);
+//console.log(vertical);
 
-let diagonal = testboard.filterBoardbyDirection("diagonal", testboard.getBoard()[0]);
-console.log(diagonal);
+//let diagonal = testboard.filterBoardbyDirection("diagonal", testboard.getBoard()[0]);
+//console.log(diagonal);

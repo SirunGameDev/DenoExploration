@@ -44,9 +44,48 @@ export class Coordinate {
     }
 
     checkNexttoIt (Canditate : Coordinate) : boolean {
-        return !(Canditate.comment == this.comment);
+        if (Canditate.comment == this.comment){
+            return false;
+        }
+        
         let horizontal = Canditate.horizontal == this.horizontal;
+        if(horizontal) {
+            if(Canditate.vertical == this.vertical+1){
+                return true;
+            }
+            if(Canditate.vertical == this.vertical-1){
+                return true;
+            }
+        }
+
         let vertical = Canditate.vertical == this.vertical;
-        let diagonal = false;
+        if(vertical) {
+            if(Canditate.horizontal == this.horizontal+1)
+            {
+                return true;
+            }
+            if(Canditate.horizontal == this.horizontal-1){
+                return true;
+            }
+        }
+        
+        if(Canditate.vertical == this.vertical+1 && Canditate.horizontal == this.horizontal+1) {
+            return true;
+        }
+
+        if(Canditate.vertical == this.vertical-1 && Canditate.horizontal == this.horizontal+1) {
+            return true;
+        }
+
+        if(Canditate.vertical == this.vertical-1 && Canditate.horizontal == this.horizontal-1) {
+            return true;
+        }
+
+        if(Canditate.vertical == this.vertical+1 && Canditate.horizontal == this.horizontal-1) {
+            return true;
+        }
+
+
+        return false;
     }
 }
