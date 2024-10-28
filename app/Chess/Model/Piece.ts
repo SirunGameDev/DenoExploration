@@ -5,9 +5,9 @@ export class Piece {
     #position: Coordinate;
     #symbol: string = "";
     
-    constructor(color, position) {
-        this.setColor(color);
-        this.setPosition(position);
+    constructor(color: string, position: Coordinate) {
+        this.#color = color;
+        this.#position = position;
     }
     getName() : string {
         return this.#name;
@@ -29,7 +29,7 @@ export class Piece {
         return this.#position;
     }
 
-    setPosition (position) {
+    setPosition (position: Coordinate){
         this.#position = position;
     }
 
