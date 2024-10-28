@@ -3,7 +3,7 @@ import { Piece } from "./Piece.ts";
 export class Pawn extends Piece {
     constructor(color, position) {
         super(color, position);
-        this.setSymbol("P");
+        this.setSymbol("P ");
         this.setName("Pawn");
     }
     getPossibleMovements() {

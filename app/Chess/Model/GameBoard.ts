@@ -30,7 +30,7 @@ export class GameBoard {
         let strings = ["a", "b", "c", "d", "e", "f", "g", "h"];
         for (let j = 0; j < 8; j++) {
             for (let i = 0; i < 8; i++) {
-                board[counter] = new Coordinate(j, i, "", strings[i]+(j+1) );
+                board[counter] = new Coordinate(j, i, "E ", strings[i]+(j+1) );
                 counter++;
             }
         }
@@ -83,7 +83,7 @@ export class GameBoard {
 
         return board;
     }
-    helperToPlacePieces(board, index, color, piece) {
+    helperToPlacePieces(board, index : number, color, piece) {
         let coord = board[index];
         let pieceObj = new piece(color, coord);
         coord.setFilling(pieceObj);
@@ -97,6 +97,21 @@ export class GameBoard {
             console.log(square+":"+coord.getFilling()+" on "+coord.getHorizontal()+" "+coord.getVertical()+" "+coord.comment);
         }
     }
+    printBoardAsString(board = this.#board) {
+        let result = "";
+        for( let i = 63; i >= 0; i--) {
+            let coord = board[i];
+            result = coord.getFilling()+" "+result;
+            if ( (i) % 8 == 0)
+            {
+                result = "\n"+result;
+            }
+            else {
+                result = "|"+result;
+            }
+        }
+        console.log(result);
+    }
 }
 
 const arrayRange = (start : number, stop : number, step : number) =>
@@ -106,8 +121,4 @@ const arrayRange = (start : number, stop : number, step : number) =>
     );
 
 let testboard = new GameBoard();
-testboard.printBoardtoConsole();
-
-let testPawn = new Pawn("white", new Coordinate(1,1));
-
-console.log(testPawn.getSymbol())
+testboard.printBoardAsString();
