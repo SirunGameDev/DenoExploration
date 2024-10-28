@@ -1,15 +1,9 @@
 import { Piece } from "./Piece.ts";
-
+import { Coordinate } from "./Coordinate.ts";
 export class Pawn extends Piece {
-    constructor(color, position) {
+    constructor(color : string, position : Coordinate) {
         super(color, position);
         this.setSymbol("P ");
         this.setName("Pawn");
     }
-    getPossibleMovements() {
-
-        return [ 1 , ["straight"], ["enemyStartingPoint"]];
-    }
-
-
 }

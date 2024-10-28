@@ -1,15 +1,15 @@
 import { Piece } from "./Piece.ts";
 
 export class Coordinate {
-    #horizont : number;
-    #vertical : number;
+    horizontal : number;
+    vertical : number;
     #filling: Piece | string;
     comment : string;
     color: string;
     constructor (horizontal : number, vertical : number, filling = "E", comment : string = "", color = "w") {
         this.#filling = filling;
-        this.#horizont = horizontal;
-        this.#vertical = vertical;
+        this.horizontal = horizontal;
+        this.vertical = vertical;
         this.comment = comment;
         this.color = color;
     }
@@ -26,20 +26,27 @@ export class Coordinate {
     }
 
     getHorizontal() {
-        return this.#horizont;
+        return this.horizontal;
     }
     getVertical () {
-        return this.#vertical;
+        return this.vertical;
     }
 
-    getPiece() : Piece | false {
+    getPiece() : Piece {
         if (typeof this.#filling == "string") {
-            return false;
+            return new Piece ("e", this);
         }
         return this.#filling;
     }
 
     getComment() : string {
         return this.comment;
+    }
+
+    checkNexttoIt (Canditate : Coordinate) : boolean {
+        return !(Canditate.comment == this.comment);
+        let horizontal = Canditate.horizontal == this.horizontal;
+        let vertical = Canditate.vertical == this.vertical;
+        let diagonal = false;
     }
 }

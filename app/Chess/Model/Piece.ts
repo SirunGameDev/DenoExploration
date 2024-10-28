@@ -1,10 +1,19 @@
 import { Coordinate } from "./Coordinate.ts";
+import { GameBoard} from "./GameBoard.ts"; 
+
 export class Piece {
     #name: string = "";
     #color: string = "";
     #position: Coordinate;
     #symbol: string = "";
     
+    directions = [
+        "horizontal",
+        "vertical",
+        "diagonal"
+    ]
+    maxMovement = 1;
+
     constructor(color: string, position: Coordinate) {
         this.#color = color;
         this.#position = position;
@@ -41,5 +50,17 @@ export class Piece {
         this.#symbol = symbol;
     }
 
-    
+    getDirections() {
+        return this.directions;
+    }
+    getMaximalMovment() {
+        return this.maxMovement;
+    }
+
+    getPossibleMove(GameBoard : GameBoard) {
+        let possibleDirection = this.getDirections();
+        let max = this.getMaximalMovment();
+        let goals = [];
+        let coord = this.getPosition();
+    }
 }

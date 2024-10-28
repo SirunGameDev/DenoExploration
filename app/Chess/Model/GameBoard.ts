@@ -6,11 +6,11 @@ import { Bishop } from "./Bishop.ts";
 import { King } from "./King.ts";
 import { Queen } from "./Queen.ts";
 import { Knight } from "./Knight.ts";
-
+import { Piece } from "./Piece.ts";
 export class GameBoard {
     #board;
 
-    constructor(board = null) {
+    constructor(board : Coordinate[] = this.getStartingBoard()) {
         if (board == null) {
             this.#board = this.getStartingBoard();
         }
@@ -24,8 +24,8 @@ export class GameBoard {
         return this.#board;
     }
 
-    static initEmptyBoard () {
-        let board = {};
+    static initEmptyBoard () : Coordinate[] {
+        let board = [];
         let counter = 0;
         let strings = ["a", "b", "c", "d", "e", "f", "g", "h"];
         for (let j = 0; j < 8; j++) {
@@ -40,10 +40,10 @@ export class GameBoard {
         }
         return board;
     }
-    getEmptyBoard () {
+    getEmptyBoard () : Coordinate[] {
         return GameBoard.initEmptyBoard();
     }
-    getStartingBoard() {
+    getStartingBoard() : Coordinate[] {
         let board = GameBoard.initEmptyBoard();
 
         // fill white pawns
@@ -83,7 +83,7 @@ export class GameBoard {
 
         return board;
     }
-    helperToPlacePieces(board, index : number, color, piece) {
+    helperToPlacePieces(board : Coordinate[], index : number, color : string, piece : any) : Coordinate[] {
         let coord = board[index];
         let pieceObj = new piece(color, coord);
         coord.setFilling(pieceObj);
@@ -91,7 +91,7 @@ export class GameBoard {
 
         return board;
     }
-    printBoardtoConsole(board = this.#board) {
+    printBoardtoConsole(board : Coordinate[] = this.#board) {
         for (let square in board) {
             let coord = board[square];
             let colorstring = this.getColorofPiece(coord);
@@ -101,14 +101,14 @@ export class GameBoard {
             console.log(string);
         }
     }
-    getColorofPiece (coord) {
+    getColorofPiece (coord : Coordinate) : string {
         let colorstring = "";
         if (coord.getPiece()) {
             colorstring = coord.getPiece().getColor()[0] + " ";
         }
         return colorstring;
     }
-    printBoardAsString(board = this.#board) {
+    printBoardAsStringBoardtoTerminal(board : Coordinate[] = this.#board) {
         let result = "";
         for( let i = 0; i < 64; i++) {
             let coord = board[i];
@@ -124,6 +124,19 @@ export class GameBoard {
         }
         console.log(result);
     }
+    filterBoardbyDirection( direction : any, startingcoord: Coordinate, board = this.#board) : Coordinate[] {
+        if (direction != "diagonal") {
+            return board.filter(coord => coord[direction as keyof Coordinate] == startingcoord[direction as keyof Coordinate] );
+        }
+        else {
+            // to do how diagonal movement can be filterd
+            return board.filter(coord => coord.color == startingcoord.color)
+            .filter(coord => coord["vertical"] != startingcoord["vertical"])
+            .filter(coord => coord["horizontal"] != startingcoord["horizontal"]);
+        }
+
+        // todo horse jump ??? 
+    }
 }
 
 const arrayRange = (start : number, stop : number, step : number) =>
@@ -133,6 +146,13 @@ const arrayRange = (start : number, stop : number, step : number) =>
     );
 
 let testboard = new GameBoard();
-testboard.printBoardtoConsole();
-testboard.printBoardAsString();
+//testboard.printBoardtoConsole();
+//testboard.printBoardAsStringBoardtoTerminal();
+let horizontal = testboard.filterBoardbyDirection("horizontal", testboard.getBoard()[0]);
+console.log(horizontal);
 
+let vertical = testboard.filterBoardbyDirection("vertical", testboard.getBoard()[0]);
+console.log(vertical);
+
+let diagonal = testboard.filterBoardbyDirection("diagonal", testboard.getBoard()[0]);
+console.log(diagonal);
