@@ -94,5 +94,5 @@ Deno.test(function getOutGoingFieldTest() {
     let Ne5 = GameBoardObject.getBoard()[36]; // e5
     let Nd4_2 = GameBoardObject.getBoard()[27]; // d4
     // to do after helper Function has Tests
-    assertEquals(Ne4.comment, Nd4.getOutGoingField(Nc4)[0].comment);
+    assertEquals(Ne4.comment, Nd4.getOutGoingField(Nc4).comment);
 });

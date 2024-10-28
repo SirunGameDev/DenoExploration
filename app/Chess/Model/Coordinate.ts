@@ -42,7 +42,8 @@ export class Coordinate {
     getComment() : string {
         return this.comment;
     }
-    getOutGoingField(Ingoing : Coordinate) : Coordinate[] {
+
+    getOutGoingField(Ingoing : Coordinate) : Coordinate {
         // to do improve this, switch may undefined that is leading to errors, acually just 
         let GameBoardArray = GameBoard.initEmptyBoard(); 
         let NextToArray = GameBoardArray.filter(Coord => this.checkNexttoIt(Coord));
@@ -61,7 +62,7 @@ export class Coordinate {
             default:
                 break;
         }
-        return Outgoing;
+        return Outgoing[0];
     }
     getRelationToNext(Canditate : Coordinate) : string {
         if(this.checkHorizontalRelation(Canditate)) {
