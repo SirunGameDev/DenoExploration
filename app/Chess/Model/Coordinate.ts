@@ -1,5 +1,5 @@
 import { Piece } from "./Piece.ts";
-
+import { GameBoard } from "./GameBoard.ts";
 export class Coordinate {
     horizontal : number;
     vertical : number;
@@ -42,7 +42,56 @@ export class Coordinate {
     getComment() : string {
         return this.comment;
     }
-
+    getOutGoingField(Ingoing : Coordinate) : Coordinate[] {
+        // to do improve this, switch may undefined that is leading to errors, acually just 
+        let GameBoardArray = GameBoard.initEmptyBoard(); 
+        let NextToArray = GameBoardArray.filter(Coord => this.checkNexttoIt(Coord));
+        let relation = this.getRelationToNext(Ingoing);
+        let Outgoing = [Ingoing];
+        switch (relation) {
+            case "horizontal":
+                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && this.checkHorizontalRelation(coord));            
+                break;
+            case "vertical":
+                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && this.checkVerticalRelation(coord));
+                break;
+            case "diagonal":
+                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && this.checkDiagonalRelation(coord));
+                break;
+            default:
+                break;
+        }
+        return Outgoing;
+    }
+    getRelationToNext(Canditate : Coordinate) : string {
+        if(this.checkHorizontalRelation(Canditate)) {
+            return "horizontal";
+        }
+        if(this.checkVerticalRelation(Canditate)) {
+            return "vertical";
+        }
+        if(this.checkDiagonalRelation(Canditate)) {
+            return "diagonal";
+        }
+        return "none";
+    }
+    checkHorizontalRelation(Canditate : Coordinate) : boolean {
+        return this.horizontal == Canditate.horizontal;
+    }
+    checkVerticalRelation(Canditate : Coordinate) : boolean {
+        return this.vertical == Canditate.vertical;
+    }
+    checkDiagonalRelation(Canditate : Coordinate) : boolean {
+        let horizontalDiff = Math.abs(Canditate.horizontal - this.horizontal);
+        let verticalDiff = Math.abs(Canditate.vertical - this.vertical);
+        if(horizontalDiff == 0) {
+            return false;
+        }
+        if(verticalDiff == 0) {
+            return false;
+        }
+        return horizontalDiff % verticalDiff == 0;
+    }
     checkNexttoIt (Canditate : Coordinate) : boolean {
         if (Canditate.comment == this.comment){
             return false;
