@@ -76,6 +76,39 @@ export class Coordinate {
         }
         return "none";
     }
+    calculateDistance(relation : string, coord : Coordinate) : number {
+        switch (relation) {
+            case "horizontal":
+                return Math.abs(this.horizontal - coord.horizontal);
+                break;
+            case "vertical":
+                return Math.abs(this.vertical - coord.vertical);
+                break;
+            case "diagonal":
+                let horizontal = this.calculateDistance("horizontal", coord);
+                let vertical = this.calculateDistance("vertical", coord);
+                // todo test this calculation for many cases;
+                return Math.max(horizontal, vertical);
+                break;
+            default:
+                return 0;
+        }
+    }
+    relationChecker(relation : string, coord : Coordinate) : boolean {
+        switch (relation) {
+            case "horizontal":
+                return this.checkHorizontalRelation(coord);
+                break;
+            case "vertical":
+                return this.checkVerticalRelation(coord);
+                break;
+            case "diagonal":
+                return this.checkDiagonalRelation(coord);
+                break;
+            default:
+                return false;
+        }
+    }
     checkHorizontalRelation(Canditate : Coordinate) : boolean {
         return this.horizontal == Canditate.horizontal;
     }
@@ -83,8 +116,8 @@ export class Coordinate {
         return this.vertical == Canditate.vertical;
     }
     checkDiagonalRelation(Canditate : Coordinate) : boolean {
-        let horizontalDiff = Math.abs(Canditate.horizontal - this.horizontal);
-        let verticalDiff = Math.abs(Canditate.vertical - this.vertical);
+        let horizontalDiff = this.calculateDistance("horizontal", Canditate);
+        let verticalDiff = this.calculateDistance("vertical", Canditate);
         if(horizontalDiff == 0) {
             return false;
         }

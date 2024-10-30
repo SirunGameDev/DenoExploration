@@ -100,3 +100,48 @@ Deno.test(function getOutGoingFieldTest() {
     assertEquals(Nc5.comment, Nd4.getOutGoingField(Ne3).comment);
     assertEquals(Nd5.comment, Nd4.getOutGoingField(Nd3).comment);
 });
+
+Deno.test(function relationCheckerTest() {
+    let GameBoardObject = new GameBoard();
+    let Nd4 = GameBoardObject.getBoard()[27]; // d4
+    let Ne4 = GameBoardObject.getBoard()[28]; // e4
+    let Ne3 = GameBoardObject.getBoard()[20]; // e3
+    let Nd3 = GameBoardObject.getBoard()[19]; // d3
+    let Nc3 = GameBoardObject.getBoard()[18]; // c3
+    let Nc4 = GameBoardObject.getBoard()[26]; // c4
+    let Nc5 = GameBoardObject.getBoard()[34]; // c5
+    let Nd5 = GameBoardObject.getBoard()[35]; // d5
+    let Ne5 = GameBoardObject.getBoard()[36]; // e5
+    let Na1 = GameBoardObject.getBoard()[0];
+    let Nh8 = GameBoardObject.getBoard()[63];
+
+
+    assertEquals(true, Nd4.relationChecker("horizontal", Nc4));
+    assertEquals(false, Nd4.relationChecker("horizontal", Nc3));
+    assertEquals(false, Nd4.relationChecker("horizontal", Nc3));
+
+    assertEquals(true, Nd4.relationChecker("diagonal", Nc3));
+    assertEquals(false, Nd4.relationChecker("diagonal", Nc4));
+
+    assertEquals(true, Nd4.relationChecker("vertical", Nd5));
+    assertEquals(false, Nd4.relationChecker("vertical", Nc4));
+
+    assertEquals(true, Na1.relationChecker("diagonal", Nh8));
+    assertEquals(false, Na1.relationChecker("horizontal", Nh8));
+    assertEquals(false, Na1.relationChecker("vertical", Nh8));
+
+});
+
+Deno.test(function calculateDistanceTest() {
+    let GameBoardObject = new GameBoard();
+    let Na1 = GameBoardObject.getBoard()[0];
+    let Nh8 = GameBoardObject.getBoard()[63];
+
+    assertEquals(7, Na1.calculateDistance("diagonal", Nh8));
+    assertEquals(7, Na1.calculateDistance("horizontal", Nh8));
+    assertEquals(7, Na1.calculateDistance("vertical", Nh8));
+
+    assertEquals(7, Nh8.calculateDistance("diagonal", Na1));
+    assertEquals(7, Nh8.calculateDistance("horizontal", Na1));
+    assertEquals(7, Nh8.calculateDistance("vertical", Na1));
+});

@@ -57,10 +57,18 @@ export class Piece {
         return this.maxMovement;
     }
 
-    getPossibleMove(GameBoard : GameBoard) {
+    getPossibleMoves(GameBoard : GameBoard) {
         let possibleDirection = this.getDirections();
         let max = this.getMaximalMovment();
-        let goals = [];
+        let goals = new Array();
         let coord = this.getPosition();
+        let color = this.#color;
+        let Board = GameBoard.getBoard();
+        for (let direction of possibleDirection) {
+            let directionArray = Board.filter(square => coord.relationChecker(direction, square) && coord.calculateDistance(direction, square) <= max);
+            goals = [...new Set([...goals, ...directionArray])];
+        }
+
+        return goals;
     }
 }
