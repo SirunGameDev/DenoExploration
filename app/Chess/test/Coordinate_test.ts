@@ -78,7 +78,7 @@ Deno.test(function checkDiagonalRelation() {
     assertEquals(false, Nd4.checkDiagonalRelation(Nd4_2));
     assertEquals(true, Nd4.checkDiagonalRelation(SH8));
     assertEquals(false, Nd4.checkDiagonalRelation(SH7));
-
+    assertEquals(false, Nc3.checkDiagonalRelation(Nd5));
 });
 
 Deno.test(function getOutGoingFieldTest() {
@@ -95,4 +95,8 @@ Deno.test(function getOutGoingFieldTest() {
     let Nd4_2 = GameBoardObject.getBoard()[27]; // d4
     // to do after helper Function has Tests
     assertEquals(Ne4.comment, Nd4.getOutGoingField(Nc4).comment);
+    assertEquals(Nd3.comment, Nd4.getOutGoingField(Nd5).comment);
+    assertEquals(Ne5.comment, Nd4.getOutGoingField(Nc3).comment);
+    assertEquals(Nc5.comment, Nd4.getOutGoingField(Ne3).comment);
+    assertEquals(Nd5.comment, Nd4.getOutGoingField(Nd3).comment);
 });

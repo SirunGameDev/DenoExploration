@@ -51,13 +51,13 @@ export class Coordinate {
         let Outgoing = [Ingoing];
         switch (relation) {
             case "horizontal":
-                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && this.checkHorizontalRelation(coord));            
+                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && Ingoing.checkHorizontalRelation(coord));            
                 break;
             case "vertical":
-                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && this.checkVerticalRelation(coord));
+                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && Ingoing.checkVerticalRelation(coord));
                 break;
             case "diagonal":
-                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && this.checkDiagonalRelation(coord));
+                Outgoing = NextToArray.filter(coord => (coord.comment != Ingoing.comment) && Ingoing.checkDiagonalRelation(coord));
                 break;
             default:
                 break;
@@ -91,7 +91,8 @@ export class Coordinate {
         if(verticalDiff == 0) {
             return false;
         }
-        return horizontalDiff % verticalDiff == 0;
+
+        return (horizontalDiff % verticalDiff == 0) && (verticalDiff % horizontalDiff == 0);
     }
     checkNexttoIt (Canditate : Coordinate) : boolean {
         if (Canditate.comment == this.comment){
