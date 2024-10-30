@@ -79,10 +79,10 @@ export class Coordinate {
     calculateDistance(relation : string, coord : Coordinate) : number {
         switch (relation) {
             case "horizontal":
-                return Math.abs(this.horizontal - coord.horizontal);
+                return Math.abs(this.vertical - coord.vertical);
                 break;
             case "vertical":
-                return Math.abs(this.vertical - coord.vertical);
+                return Math.abs(this.horizontal - coord.horizontal);
                 break;
             case "diagonal":
                 let horizontal = this.calculateDistance("horizontal", coord);

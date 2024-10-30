@@ -24,6 +24,10 @@ export class GameBoard {
         return this.#board;
     }
 
+    setBoard(board : Coordinate[]) {
+        this.#board = board;
+    }
+
     static initEmptyBoard () : Coordinate[] {
         let board = [];
         let counter = 0;
@@ -122,6 +126,7 @@ export class GameBoard {
                 result = "|"+result;
             }
         }
+        // mirrored board 
         console.log(result);
     }
     filterBoardbyDirection( direction : any, startingcoord: Coordinate, board = this.#board) : Coordinate[] {

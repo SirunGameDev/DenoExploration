@@ -135,6 +135,8 @@ Deno.test(function relationCheckerTest() {
 Deno.test(function calculateDistanceTest() {
     let GameBoardObject = new GameBoard();
     let Na1 = GameBoardObject.getBoard()[0];
+    let Na2 = GameBoardObject.getBoard()[1];
+
     let Nh8 = GameBoardObject.getBoard()[63];
 
     assertEquals(7, Na1.calculateDistance("diagonal", Nh8));
@@ -144,4 +146,11 @@ Deno.test(function calculateDistanceTest() {
     assertEquals(7, Nh8.calculateDistance("diagonal", Na1));
     assertEquals(7, Nh8.calculateDistance("horizontal", Na1));
     assertEquals(7, Nh8.calculateDistance("vertical", Na1));
+
+    assertEquals(0, Na1.calculateDistance("vertical", Na2));
+    assertEquals(1, Na1.calculateDistance("horizontal", Na2));
+    assertEquals(1, Na1.calculateDistance("diagonal", Na2));
+
+
+
 });

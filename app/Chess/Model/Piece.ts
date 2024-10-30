@@ -56,8 +56,13 @@ export class Piece {
     getMaximalMovment() {
         return this.maxMovement;
     }
-
-    getPossibleMoves(GameBoard : GameBoard) {
+    setDirections(directions : string[]) {
+        this.directions = directions;
+    }
+    setMaximalMovment(max : number) {
+        this.maxMovement = max;
+    }
+    getPossibleMoves(GameBoard : GameBoard) : Coordinate[] {
         let possibleDirection = this.getDirections();
         let max = this.getMaximalMovment();
         let goals = new Array();
@@ -65,10 +70,28 @@ export class Piece {
         let color = this.#color;
         let Board = GameBoard.getBoard();
         for (let direction of possibleDirection) {
-            let directionArray = Board.filter(square => coord.relationChecker(direction, square) && coord.calculateDistance(direction, square) <= max);
+            let directionArray = Board.filter((square) => (square != coord) && (coord.relationChecker(direction, square)) && (coord.calculateDistance(direction, square) <= max) && ["E", "E ", "e"].includes(square.getFilling()));
             goals = [...new Set([...goals, ...directionArray])];
         }
 
         return goals;
+    }
+
+    move (GameBoard : GameBoard, newC : Coordinate) : GameBoard {
+        let old = this.getPosition();
+        let board = GameBoard.getBoard();
+        let oldIndex = board.findIndex(square => old.vertical == square.vertical && old.horizontal == square.horizontal);
+        let newIndex = board.findIndex(square => newC.vertical == square.vertical && newC.horizontal == square.horizontal);
+
+        if(this.getPossibleMoves(GameBoard).includes(newC)){
+            this.setPosition(newC);
+            newC.setFilling(this);
+            old.setFilling("E ");
+        }
+        board[oldIndex] = old;
+        board[newIndex] = newC;
+
+        GameBoard.setBoard(board);
+        return GameBoard;
     }
 }
