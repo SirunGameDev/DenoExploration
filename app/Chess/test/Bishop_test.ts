@@ -34,4 +34,7 @@ Deno.test(function moveTest() {
     assertEquals("E ", GameBoardObject.getBoard()[62].getFilling());
     assertEquals("E ", GameBoardObject.getBoard()[0].getFilling());
 
+    BishopObject.move(GameBoardObject, GameBoardObject.getBoard()[63]);
+    assertEquals("Bi", GameBoardObject.getBoard()[63].getFilling());
+
 });

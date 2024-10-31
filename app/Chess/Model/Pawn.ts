@@ -17,7 +17,13 @@ export class Pawn extends Piece {
 
         return result;
     }
-
+    override move (GameBoard : GameBoard, newC : Coordinate) : GameBoard {
+        let gbobject = super.move(GameBoard, newC);
+        if(this.getPosition().comment == newC.comment) {
+            this.setMaximalMovment(1);
+        }
+        return gbobject;
+    }
     filterBackwards(result : Coordinate[]) : Coordinate[] {
         let wert = this.getPosition().horizontal;
         if (this.getColor() == "white") {
