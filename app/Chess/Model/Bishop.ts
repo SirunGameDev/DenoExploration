@@ -5,5 +5,7 @@ export class Bishop extends Piece {
         super(color, position);
         this.setSymbol("Bi");
         this.setName("Bishop");
+        this.setDirections(["diagonal"]);
+        this.setMaximalMovment(8); // or 7?
     }
 }

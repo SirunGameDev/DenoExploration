@@ -5,5 +5,7 @@ export class King extends Piece {
         super(color, position);
         this.setSymbol("Ki");
         this.setName("King");
+        this.setDirections(["diagonal", "vertical", "horizontal"]);
+        this.setMaximalMovment(1); // or 7?
     }
 }

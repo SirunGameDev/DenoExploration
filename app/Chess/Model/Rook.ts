@@ -5,5 +5,7 @@ export class Rook extends Piece {
         super(color, position);
         this.setSymbol("Ro");
         this.setName("Rook");
+        this.setDirections(["vertical", "horizontal"]);
+        this.setMaximalMovment(8); // or 7?
     }
 }

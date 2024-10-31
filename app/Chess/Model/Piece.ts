@@ -73,7 +73,7 @@ export class Piece {
             let directionArray = Board.filter((square) => (square != coord) && (coord.relationChecker(direction, square)) && (coord.calculateDistance(direction, square) <= max) && ["E", "E ", "e"].includes(square.getFilling()));
             goals = [...new Set([...goals, ...directionArray])];
         }
-
+        // todo remove goals behind friendly figures and how to take possition of enemys. knight and pawn special stuff
         return goals;
     }
 

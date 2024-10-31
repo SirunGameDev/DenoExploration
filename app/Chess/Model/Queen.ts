@@ -5,5 +5,7 @@ export class Queen extends Piece {
         super(color, position);
         this.setSymbol("Qu");
         this.setName("Queen");
+        this.setDirections(["diagonal", "vertical", "horizontal"]);
+        this.setMaximalMovment(8); // or 7?
     }
 }
