@@ -38,7 +38,11 @@ export class Knight extends Piece {
             let testhorizontal = currentPos.horizontal+testcase.horizontal;
             let testvertical = currentPos.vertical+testcase.vertical;
             // or is working with if better?
-            let filterarray = board.filter(square => square.horizontal == testhorizontal && square.vertical == testvertical);
+            let filterarray = board.filter(square => 
+                square.horizontal == testhorizontal 
+                && square.vertical == testvertical
+            );
+            // todo: remove goals with own Color Pieces
             goals = [...new Set([...goals, ...filterarray])];
         }
         return goals;

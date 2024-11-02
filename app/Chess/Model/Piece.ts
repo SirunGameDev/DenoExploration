@@ -70,13 +70,65 @@ export class Piece {
         let color = this.#color;
         let Board = GameBoard.getBoard();
         for (let direction of possibleDirection) {
-            let directionArray = Board.filter((square) => (square != coord) && (coord.relationChecker(direction, square)) && (coord.calculateDistance(direction, square) <= max) && ["E", "E ", "e"].includes(square.getFilling()));
+            let directionArray = Board.filter((square) => 
+                    (square != coord) 
+                    && (coord.relationChecker(direction, square)) 
+                    && (coord.calculateDistance(direction, square) <= max) 
+                    // && ["E", "E ", "e"].includes(square.getFilling())
+                );
+            directionArray = this.calculateShadowCase(direction, directionArray, coord);
             goals = [...new Set([...goals, ...directionArray])];
         }
         // todo remove goals behind friendly figures and how to take possition of enemys. knight and pawn special stuff
         return goals;
     }
+    calculateShadowCase(direction : string, array : Coordinate[], coord : Coordinate) : Coordinate[] {
+        let banned = new Array();
+        for(let square of array) {
+            // if empty field, not check is needed
+            if(["E", "E ", "e"].includes(square.getFilling())){
+                continue;
+            }
+            // if blocked by own color, then filter sqaure itself and all following
+            if(square.getPiece().getColor() == this.#color){
+                console.log(JSON.stringify(coord));
+                console.log("ownColor in way "+JSON.stringify(square));
+                console.log(this.compareCoords(coord, square));
+                
+                banned.push(square);
+                
+            }
+            // if blocked by enemy color, then filter all following
+            if(square.getPiece().getColor() != this.#color){
+                console.log("enemy in way");
+            }
+        }
+        return array.filter(element => !banned.includes(element));
+    }
+    markFollowingFieldsasBanned(direction : string, array : Coordinate[], coord : Coordinate) {
+        switch (direction) {
+            case "diagonal":
+                
+                break;
+            case "horizontal":
+                
+                break;
 
+            case "vertical":
+                
+                break;
+            default:
+                throw new Error("direction not matching");
+                
+                break;
+        }
+    }
+    compareCoords(First : Coordinate, Second : Coordinate){
+        let verticaldiff = First.vertical - Second.vertical;
+        let horizontaldiff = First.horizontal - Second.horizontal;
+
+        return [verticaldiff, horizontaldiff];
+    }
     move (GameBoard : GameBoard, newC : Coordinate) : GameBoard {
         let old = this.getPosition();
         let board = GameBoard.getBoard();
