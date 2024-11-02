@@ -112,5 +112,4 @@ Deno.test(function moveTest() {
     assertEquals("E ", GameBoardObject.getBoard()[44].getFilling());
     bKne4.move(GameBoardObject, GameBoardObject.getBoard()[28]);
     assertEquals("Kn", GameBoardObject.getBoard()[28].getFilling());
-    GameBoardObject.printBoardAsStringBoardtoTerminal();
 });
