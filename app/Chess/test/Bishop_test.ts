@@ -44,12 +44,13 @@ Deno.test(function shadowcalculationTest() {
     let StartingBoard = GameBoardObject.getBoard();
 
     let TestBishop = StartingBoard[2].getPiece();
+    let TestStartPoint = StartingBoard[2];
     let TestTarget = StartingBoard[16];
     TestBishop.move(GameBoardObject, TestTarget);
     assertEquals(TestBishop.getName(), "Bishop");
 
     
-    assertEquals(TestBishop.getPosition(), TestTarget);
+    assertEquals(TestBishop.getPosition(), TestStartPoint);
 
-    assertEquals("Bi", GameBoardObject.getBoard()[16].getFilling());
+    assertEquals("Bi", GameBoardObject.getBoard()[2].getFilling());
 });

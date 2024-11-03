@@ -76,51 +76,64 @@ export class Piece {
                     && (coord.calculateDistance(direction, square) <= max) 
                     // && ["E", "E ", "e"].includes(square.getFilling())
                 );
-            directionArray = this.calculateShadowCase(direction, directionArray, coord);
+            directionArray = this.calculateShadowCase(directionArray, coord);
             goals = [...new Set([...goals, ...directionArray])];
         }
         // todo remove goals behind friendly figures and how to take possition of enemys. knight and pawn special stuff
         return goals;
     }
-    calculateShadowCase(direction : string, array : Coordinate[], coord : Coordinate) : Coordinate[] {
+    calculateShadowCase(array : Coordinate[], StartingPoint : Coordinate) : Coordinate[] {
         let banned = new Array();
         for(let square of array) {
+            let tobann = new Array();
             // if empty field, not check is needed
             if(["E", "E ", "e"].includes(square.getFilling())){
                 continue;
             }
             // if blocked by own color, then filter sqaure itself and all following
             if(square.getPiece().getColor() == this.#color){
-                console.log(JSON.stringify(coord));
-                console.log("ownColor in way "+JSON.stringify(square));
-                console.log(this.compareCoords(coord, square));
-                
                 banned.push(square);
-                
+                tobann = this.markFollowingFieldsasBanned(array, StartingPoint, square );
             }
             // if blocked by enemy color, then filter all following
-            if(square.getPiece().getColor() != this.#color){
-                console.log("enemy in way");
+            if(square.getPiece().getColor() != this.#color){                
+                tobann = this.markFollowingFieldsasBanned(array, StartingPoint, square );
             }
+            banned =  [...new Set([...banned, ...tobann])];
         }
         return array.filter(element => !banned.includes(element));
     }
-    markFollowingFieldsasBanned(direction : string, array : Coordinate[], coord : Coordinate) {
-        switch (direction) {
-            case "diagonal":
-                
-                break;
-            case "horizontal":
-                
-                break;
-
-            case "vertical":
-                
-                break;
-            default:
-                throw new Error("direction not matching");
-                
-                break;
+    markFollowingFieldsasBanned(array : Coordinate[], startPoint : Coordinate, filterPoint : Coordinate) {
+        let marker = new Array();
+        let set = new Array();
+        let blSwitch = true;
+        for(let i = 0; i < array.length; i++) {
+            if(array[i] == filterPoint) {
+                blSwitch = !blSwitch;
+                continue;
+            }
+            if(blSwitch) {
+                marker.push(array[i]);
+            }
+            else {
+                set.push(array[i]);
+            }
+        }
+        let returnArray = this.arrayChooser(set, marker, startPoint);
+        return returnArray;
+    }
+    arrayChooser(array1 : Coordinate[], array2 : Coordinate[], startPoint : Coordinate) : Coordinate[] {
+        let possible = array1.filter(element => element.checkNexttoIt(startPoint));
+        let possible2 = array2.filter(element => element.checkNexttoIt(startPoint));
+        if(possible.length > 0){
+            return array2;
+        }
+        if(possible2.length > 0){
+            return array1;
+        }
+        else {
+            console.log("cannot choose");
+            return new Array();
         }
     }
     compareCoords(First : Coordinate, Second : Coordinate){
