@@ -1,7 +1,6 @@
 import { Coordinate } from "./Coordinate.ts";
 import { GameBoard } from "./GameBoard.ts"; 
-import { IPiece} from "../Interfaces/IPiece.ts";
-export class Piece implements IPiece{
+export class Piece{
     #name: string = "";
     #color: string = "";
     #position: Coordinate;
@@ -13,9 +12,6 @@ export class Piece implements IPiece{
         "diagonal"
     ]
     maxMovement = 1;
-    /*new (color: string, position: Coordinate) : Piece {
-        return this;
-    }*/
     constructor(color: string, position: Coordinate) {
         this.#color = color;
         this.#position = position;

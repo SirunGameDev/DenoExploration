@@ -6,7 +6,7 @@ import { Bishop } from "./Bishop.ts";
 import { King } from "./King.ts";
 import { Queen } from "./Queen.ts";
 import { Knight } from "./Knight.ts";
-//import { Piece } from "./Piece.ts";
+import { Piece } from "./Piece.ts";
 //import { IPiece } from "../Interfaces/IPiece.ts";
 export class GameBoard {
     #board;
@@ -85,22 +85,12 @@ export class GameBoard {
 
         board = this.helperToPlacePieces(board, 60, "black", King);
         board = this.helperToPlacePieces(board, 59,  "black", Queen);
+        console.log(Queen);
         return board;
     }
- /*   createPiece (ConstructorI : IPiece, color: string, position: Coordinate) : IPiece {
-        return new ConstructorI (color, position);
-    } 
-    helperToPlacePieces(board : Coordinate[], index : number, pieceObj : IPiece) : Coordinate[] {
-        const coord = board[index];
-        //const pieceObj = new piece(color, coord);
-        coord.setFilling(pieceObj);
-        board[index] = coord;
 
-        return board;
-    }*/
-   // to do any to specific type of Piece-Type like
-    // deno-lint-ignore no-explicit-any
-    helperToPlacePieces(board : Coordinate[], index : number, color: string,  piece : any) : Coordinate[] {
+    //* deno-lint-ignore no-explicit-any
+    helperToPlacePieces(board : Coordinate[], index : number, color: string,  piece : typeof Piece) : Coordinate[] {
         const coord = board[index];
         const pieceObj = new piece(color, coord);
         coord.setFilling(pieceObj);
