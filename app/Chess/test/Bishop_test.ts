@@ -4,21 +4,21 @@ import { Coordinate } from "../Model/Coordinate.ts";
 import { GameBoard } from "../Model/GameBoard.ts";
 
 Deno.test(function constructorTest() {
-    let BishopObject = new Bishop ("white", new Coordinate(0, 0));
+    const BishopObject = new Bishop ("white", new Coordinate(0, 0));
 
     assertEquals("Bishop", BishopObject.getName());
 });
 
 Deno.test(function getterTests() {
-    let BishopObject = new Bishop ("white", new Coordinate(0, 0));
+    const BishopObject = new Bishop ("white", new Coordinate(0, 0));
     
     assertEquals(BishopObject.getColor(), "white");
 });
 
 Deno.test(function moveTest() {
-    let emptyBoard = GameBoard.initEmptyBoard();
-    let GameBoardObject = new GameBoard(emptyBoard);
-    let BishopObject = new Bishop ("white", GameBoardObject.getBoard()[0]);
+    const emptyBoard = GameBoard.initEmptyBoard();
+    const GameBoardObject = new GameBoard(emptyBoard);
+    const BishopObject = new Bishop ("white", GameBoardObject.getBoard()[0]);
     GameBoardObject.getBoard()[0].setFilling(BishopObject);
     assertEquals("Bi", GameBoardObject.getBoard()[0].getFilling());
     assertEquals("E ", GameBoardObject.getBoard()[63].getFilling());
@@ -40,12 +40,12 @@ Deno.test(function moveTest() {
 });
 
 Deno.test(function shadowcalculationTest() {
-    let GameBoardObject = new GameBoard();
-    let StartingBoard = GameBoardObject.getBoard();
+    const GameBoardObject = new GameBoard();
+    const StartingBoard = GameBoardObject.getBoard();
 
-    let TestBishop = StartingBoard[2].getPiece();
-    let TestStartPoint = StartingBoard[2];
-    let TestTarget = StartingBoard[16];
+    const TestBishop = StartingBoard[2].getPiece();
+    const TestStartPoint = StartingBoard[2];
+    const TestTarget = StartingBoard[16];
     TestBishop.move(GameBoardObject, TestTarget);
     assertEquals(TestBishop.getName(), "Bishop");
 

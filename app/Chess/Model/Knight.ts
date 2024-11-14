@@ -9,9 +9,9 @@ export class Knight extends Piece {
     }
 
     override getPossibleMoves(GameBoard : GameBoard) : Coordinate[] {
-        let board = GameBoard.getBoard();
-        let currentPos = this.getPosition();
-        let goals = new Array();
+        const board = GameBoard.getBoard();
+        const currentPos = this.getPosition();
+        let goals : Coordinate[] = [];
         // manuall breaking down to grasp calculation
         // cases like compass: NorthEast, EastNorth, EastSouth, SE, SW, WS, WN, NW
         // 0 : e4
@@ -23,7 +23,7 @@ export class Knight extends Piece {
         // WS : horizontal-2, vertical-1, c3
         // WN : horizontal-2, vertical+1, c5
         // NW : horizontal-1, vertical+2, d6
-        let testarray = [
+        const testarray = [
             { horizontal: 1, vertical: 2}, // f6
             { horizontal: 2, vertical: 1}, // g5
             { horizontal: 2, vertical: -1}, //g3
@@ -34,11 +34,11 @@ export class Knight extends Piece {
             { horizontal: -1, vertical: 2}, // d6
         ];
        
-        for (let testcase of testarray) {
-            let testhorizontal = currentPos.horizontal+testcase.horizontal;
-            let testvertical = currentPos.vertical+testcase.vertical;
+        for (const testcase of testarray) {
+            const testhorizontal = currentPos.horizontal+testcase.horizontal;
+            const testvertical = currentPos.vertical+testcase.vertical;
             // or is working with if better?
-            let filterarray = board.filter(square => 
+            const filterarray = board.filter(square => 
                 square.horizontal == testhorizontal 
                 && square.vertical == testvertical
             );

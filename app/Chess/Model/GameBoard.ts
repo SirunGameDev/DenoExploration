@@ -6,7 +6,8 @@ import { Bishop } from "./Bishop.ts";
 import { King } from "./King.ts";
 import { Queen } from "./Queen.ts";
 import { Knight } from "./Knight.ts";
-import { Piece } from "./Piece.ts";
+//import { Piece } from "./Piece.ts";
+//import { IPiece } from "../Interfaces/IPiece.ts";
 export class GameBoard {
     #board;
 
@@ -29,9 +30,9 @@ export class GameBoard {
     }
 
     static initEmptyBoard () : Coordinate[] {
-        let board = [];
+        const board : Coordinate[] = [];
         let counter = 0;
-        let strings = ["a", "b", "c", "d", "e", "f", "g", "h"];
+        const strings = ["a", "b", "c", "d", "e", "f", "g", "h"];
         for (let j = 0; j < 8; j++) {
             for (let i = 0; i < 8; i++) {
                 let color = "w";
@@ -83,24 +84,36 @@ export class GameBoard {
         board = this.helperToPlacePieces(board, 61, "black", Bishop);
 
         board = this.helperToPlacePieces(board, 60, "black", King);
-        board = this.helperToPlacePieces(board, 59, "black", Queen);
-
+        board = this.helperToPlacePieces(board, 59,  "black", Queen);
         return board;
     }
-    helperToPlacePieces(board : Coordinate[], index : number, color : string, piece : any) : Coordinate[] {
-        let coord = board[index];
-        let pieceObj = new piece(color, coord);
+ /*   createPiece (ConstructorI : IPiece, color: string, position: Coordinate) : IPiece {
+        return new ConstructorI (color, position);
+    } 
+    helperToPlacePieces(board : Coordinate[], index : number, pieceObj : IPiece) : Coordinate[] {
+        const coord = board[index];
+        //const pieceObj = new piece(color, coord);
+        coord.setFilling(pieceObj);
+        board[index] = coord;
+
+        return board;
+    }*/
+   // to do any to specific type of Piece-Type like
+    // deno-lint-ignore no-explicit-any
+    helperToPlacePieces(board : Coordinate[], index : number, color: string,  piece : any) : Coordinate[] {
+        const coord = board[index];
+        const pieceObj = new piece(color, coord);
         coord.setFilling(pieceObj);
         board[index] = coord;
 
         return board;
     }
     printBoardtoConsole(board : Coordinate[] = this.#board) {
-        for (let square in board) {
-            let coord = board[square];
-            let colorstring = this.getColorofPiece(coord);
+        for (const square in board) {
+            const coord = board[square];
+            const colorstring = this.getColorofPiece(coord);
 
-            let string = square+": "+colorstring+coord.getFilling()+" on "+coord.getHorizontal()+" "+coord.getVertical()+" "+coord.comment+coord.color
+            const string = square+": "+colorstring+coord.getFilling()+" on "+coord.getHorizontal()+" "+coord.getVertical()+" "+coord.comment+coord.color
 
             console.log(string);
         }
@@ -115,8 +128,8 @@ export class GameBoard {
     printBoardAsStringBoardtoTerminal(board : Coordinate[] = this.#board) {
         let result = "";
         for( let i = 0; i < 64; i++) {
-            let coord = board[i];
-            let colorstring = this.getColorofPiece(coord);
+            const coord = board[i];
+            const colorstring = this.getColorofPiece(coord);
             result = colorstring+coord.getFilling()+" "+coord.color+result;
             if ( (i+1) % 8 == 0)
             {
@@ -127,9 +140,9 @@ export class GameBoard {
             }
         }
         // mirrored board 
-        console.log(result);
+        console.log(result); 
     }
-    filterBoardbyDirection( direction : any, startingcoord: Coordinate, board = this.#board) : Coordinate[] {
+    filterBoardbyDirection( direction : string, startingcoord: Coordinate, board = this.#board) : Coordinate[] {
         if (direction != "diagonal") {
             return board.filter(coord => coord[direction as keyof Coordinate] == startingcoord[direction as keyof Coordinate] );
         }
@@ -144,12 +157,12 @@ export class GameBoard {
     }
 }
 
-const arrayRange = (start : number, stop : number, step : number) =>
+/*let arrayRange = (start : number, stop : number, step : number) =>
     Array.from(
     { length: (stop - start) / step + 1 },
     (value, index) => start + index * step
     );
-
+*/
 //let testboard = new GameBoard();
 //testboard.printBoardtoConsole();
 //testboard.printBoardAsStringBoardtoTerminal();

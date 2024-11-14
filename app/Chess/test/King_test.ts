@@ -4,21 +4,21 @@ import { Coordinate } from "../Model/Coordinate.ts";
 import { GameBoard } from "../Model/GameBoard.ts";
 
 Deno.test(function constructorTest() {
-    let KingObject = new King ("white", new Coordinate(0, 0));
+    const KingObject = new King ("white", new Coordinate(0, 0));
 
     assertEquals("King", KingObject.getName());
 });
 
 Deno.test(function getterTests() {
-    let KingObject = new King ("white", new Coordinate(0, 0));
+    const KingObject = new King ("white", new Coordinate(0, 0));
     
     assertEquals(KingObject.getColor(), "white");
 });
 
 Deno.test(function moveTest() {
-    let emptyBoard = GameBoard.initEmptyBoard();
-    let GameBoardObject = new GameBoard(emptyBoard);
-    let KingObject = new King ("white", GameBoardObject.getBoard()[0]);
+    const emptyBoard = GameBoard.initEmptyBoard();
+    const GameBoardObject = new GameBoard(emptyBoard);
+    const KingObject = new King ("white", GameBoardObject.getBoard()[0]);
     GameBoardObject.getBoard()[0].setFilling(KingObject);
     assertEquals("Ki", GameBoardObject.getBoard()[0].getFilling());
     assertEquals("E ", GameBoardObject.getBoard()[63].getFilling());

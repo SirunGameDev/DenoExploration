@@ -1,7 +1,7 @@
 import { Coordinate } from "./Coordinate.ts";
-import { GameBoard} from "./GameBoard.ts"; 
-
-export class Piece {
+import { GameBoard } from "./GameBoard.ts"; 
+import { IPiece} from "../Interfaces/IPiece.ts";
+export class Piece implements IPiece{
     #name: string = "";
     #color: string = "";
     #position: Coordinate;
@@ -13,11 +13,14 @@ export class Piece {
         "diagonal"
     ]
     maxMovement = 1;
-
+    /*new (color: string, position: Coordinate) : Piece {
+        return this;
+    }*/
     constructor(color: string, position: Coordinate) {
         this.#color = color;
         this.#position = position;
     }
+
     getName() : string {
         return this.#name;
     }
@@ -63,13 +66,13 @@ export class Piece {
         this.maxMovement = max;
     }
     getPossibleMoves(GameBoard : GameBoard) : Coordinate[] {
-        let possibleDirection = this.getDirections();
-        let max = this.getMaximalMovment();
-        let goals = new Array();
-        let coord = this.getPosition();
-        let color = this.#color;
-        let Board = GameBoard.getBoard();
-        for (let direction of possibleDirection) {
+        const possibleDirection = this.getDirections();
+        const max = this.getMaximalMovment();
+        let goals : Coordinate[] = [];
+        const coord = this.getPosition();
+        //const color = this.#color;
+        const Board = GameBoard.getBoard();
+        for (const direction of possibleDirection) {
             let directionArray = Board.filter((square) => 
                     (square != coord) 
                     && (coord.relationChecker(direction, square)) 
@@ -83,9 +86,9 @@ export class Piece {
         return goals;
     }
     calculateShadowCase(array : Coordinate[], StartingPoint : Coordinate) : Coordinate[] {
-        let banned = new Array();
-        for(let square of array) {
-            let tobann = new Array();
+        let banned : Coordinate[] = [];
+        for(const square of array) {
+            let tobann: Coordinate[] = [];
             // if empty field, not check is needed
             if(["E", "E ", "e"].includes(square.getFilling())){
                 continue;
@@ -104,8 +107,8 @@ export class Piece {
         return array.filter(element => !banned.includes(element));
     }
     markFollowingFieldsasBanned(array : Coordinate[], startPoint : Coordinate, filterPoint : Coordinate) {
-        let marker = new Array();
-        let set = new Array();
+        const marker = [];
+        const set = [];
         let blSwitch = true;
         for(let i = 0; i < array.length; i++) {
             if(array[i] == filterPoint) {
@@ -119,12 +122,12 @@ export class Piece {
                 set.push(array[i]);
             }
         }
-        let returnArray = this.arrayChooser(set, marker, startPoint);
+        const returnArray = this.arrayChooser(set, marker, startPoint);
         return returnArray;
     }
     arrayChooser(array1 : Coordinate[], array2 : Coordinate[], startPoint : Coordinate) : Coordinate[] {
-        let possible = array1.filter(element => element.checkNexttoIt(startPoint));
-        let possible2 = array2.filter(element => element.checkNexttoIt(startPoint));
+        const possible = array1.filter(element => element.checkNexttoIt(startPoint));
+        const possible2 = array2.filter(element => element.checkNexttoIt(startPoint));
         if(possible.length > 0){
             return array2;
         }
@@ -132,21 +135,20 @@ export class Piece {
             return array1;
         }
         else {
-            console.log("cannot choose");
-            return new Array();
+            return new Array(0);
         }
     }
     compareCoords(First : Coordinate, Second : Coordinate){
-        let verticaldiff = First.vertical - Second.vertical;
-        let horizontaldiff = First.horizontal - Second.horizontal;
+        const verticaldiff = First.vertical - Second.vertical;
+        const horizontaldiff = First.horizontal - Second.horizontal;
 
         return [verticaldiff, horizontaldiff];
     }
     move (GameBoard : GameBoard, newC : Coordinate) : GameBoard {
-        let old = this.getPosition();
-        let board = GameBoard.getBoard();
-        let oldIndex = board.findIndex(square => old.vertical == square.vertical && old.horizontal == square.horizontal);
-        let newIndex = board.findIndex(square => newC.vertical == square.vertical && newC.horizontal == square.horizontal);
+        const old = this.getPosition();
+        const board = GameBoard.getBoard();
+        const oldIndex = board.findIndex(square => old.vertical == square.vertical && old.horizontal == square.horizontal);
+        const newIndex = board.findIndex(square => newC.vertical == square.vertical && newC.horizontal == square.horizontal);
 
         if(this.getPossibleMoves(GameBoard).includes(newC)){
             this.setPosition(newC);

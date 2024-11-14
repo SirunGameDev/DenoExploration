@@ -4,21 +4,21 @@ import { Coordinate } from "../Model/Coordinate.ts";
 import { GameBoard } from "../Model/GameBoard.ts";
 
 Deno.test(function constructorTest() {
-    let KnightObject = new Knight ("white", new Coordinate(0, 0));
+    const KnightObject = new Knight ("white", new Coordinate(0, 0));
 
     assertEquals("Knight", KnightObject.getName());
 });
 
 Deno.test(function getterTests() {
-    let KnightObject = new Knight ("white", new Coordinate(0, 0));
+    const KnightObject = new Knight ("white", new Coordinate(0, 0));
     
     assertEquals(KnightObject.getColor(), "white");
 });
 
 Deno.test(function moveTest() {
-    let emptyBoard = GameBoard.initEmptyBoard();
-    let GameBoardObject = new GameBoard(emptyBoard);
-    let KnightObject = new Knight ("white", GameBoardObject.getBoard()[0]);
+    const emptyBoard = GameBoard.initEmptyBoard();
+    const GameBoardObject = new GameBoard(emptyBoard);
+    const KnightObject = new Knight ("white", GameBoardObject.getBoard()[0]);
     GameBoardObject.getBoard()[0].setFilling(KnightObject);
     assertEquals("Kn", GameBoardObject.getBoard()[0].getFilling());
     assertEquals("E ", GameBoardObject.getBoard()[17].getFilling());
@@ -50,7 +50,7 @@ Deno.test(function moveTest() {
     // WN : horizontal-2, vertical+1, c5
     // NW : horizontal-1, vertical+2, d6 
 
-    let bKne4 = new Knight ("black", GameBoardObject.getBoard()[28]); // 28 = e4
+    const bKne4 = new Knight ("black", GameBoardObject.getBoard()[28]); // 28 = e4
     GameBoardObject.getBoard()[28].setFilling(bKne4);
     assertEquals("e4", GameBoardObject.getBoard()[28].comment);
 

@@ -45,9 +45,9 @@ export class Coordinate {
 
     getOutGoingField(Ingoing : Coordinate) : Coordinate {
         // to do improve this, switch may undefined that is leading to errors, acually just 
-        let GameBoardArray = GameBoard.initEmptyBoard(); 
-        let NextToArray = GameBoardArray.filter(Coord => this.checkNexttoIt(Coord));
-        let relation = this.getRelationToNext(Ingoing);
+        const GameBoardArray = GameBoard.initEmptyBoard(); 
+        const NextToArray = GameBoardArray.filter(Coord => this.checkNexttoIt(Coord));
+        const relation = this.getRelationToNext(Ingoing);
         let Outgoing = [Ingoing];
         switch (relation) {
             case "horizontal":
@@ -79,17 +79,15 @@ export class Coordinate {
     calculateDistance(relation : string, coord : Coordinate) : number {
         switch (relation) {
             case "horizontal":
-                return Math.abs(this.vertical - coord.vertical);
-                break;
+                return Math.abs(this.vertical - coord.vertical);                
             case "vertical":
-                return Math.abs(this.horizontal - coord.horizontal);
-                break;
-            case "diagonal":
-                let horizontal = this.calculateDistance("horizontal", coord);
-                let vertical = this.calculateDistance("vertical", coord);
+                return Math.abs(this.horizontal - coord.horizontal);                
+            case "diagonal": {
+                const horizontal = this.calculateDistance("horizontal", coord);
+                const vertical = this.calculateDistance("vertical", coord);
                 // todo test this calculation for many cases;
                 return Math.max(horizontal, vertical);
-                break;
+            } 
             default:
                 return 0;
         }
@@ -98,13 +96,13 @@ export class Coordinate {
         switch (relation) {
             case "horizontal":
                 return this.checkHorizontalRelation(coord);
-                break;
+                
             case "vertical":
                 return this.checkVerticalRelation(coord);
-                break;
+               
             case "diagonal":
                 return this.checkDiagonalRelation(coord);
-                break;
+               
             default:
                 return false;
         }
@@ -116,8 +114,8 @@ export class Coordinate {
         return this.vertical == Canditate.vertical;
     }
     checkDiagonalRelation(Canditate : Coordinate) : boolean {
-        let horizontalDiff = this.calculateDistance("horizontal", Canditate);
-        let verticalDiff = this.calculateDistance("vertical", Canditate);
+        const horizontalDiff = this.calculateDistance("horizontal", Canditate);
+        const verticalDiff = this.calculateDistance("vertical", Canditate);
         if(horizontalDiff == 0) {
             return false;
         }
@@ -132,7 +130,7 @@ export class Coordinate {
             return false;
         }
         
-        let horizontal = Canditate.horizontal == this.horizontal;
+        const horizontal = Canditate.horizontal == this.horizontal;
         if(horizontal) {
             if(Canditate.vertical == this.vertical+1){
                 return true;
@@ -142,7 +140,7 @@ export class Coordinate {
             }
         }
 
-        let vertical = Canditate.vertical == this.vertical;
+        const vertical = Canditate.vertical == this.vertical;
         if(vertical) {
             if(Canditate.horizontal == this.horizontal+1)
             {
