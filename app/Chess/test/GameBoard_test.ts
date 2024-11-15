@@ -1,4 +1,4 @@
-import { assertEquals } from "@std/assert";
+import { assertEquals } from "jsr:@std/assert";
 //import { Piece } from "../Model/Piece.ts";
 //import { Coordinate } from "../Model/Coordinate.ts";
 import { GameBoard } from "../Model/GameBoard.ts";

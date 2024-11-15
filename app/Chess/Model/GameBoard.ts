@@ -85,7 +85,6 @@ export class GameBoard {
 
         board = this.helperToPlacePieces(board, 60, "black", King);
         board = this.helperToPlacePieces(board, 59,  "black", Queen);
-        console.log(Queen);
         return board;
     }
 
