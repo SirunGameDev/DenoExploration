@@ -1,4 +1,4 @@
-FROM denoland/deno:ubuntu-2.1.1
+FROM denoland/deno:ubuntu-2.1.2
 
 WORKDIR /app
 #USER deno
