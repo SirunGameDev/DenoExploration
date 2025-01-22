@@ -115,6 +115,10 @@ export class GameBoard {
         return colorstring;
     }
     printBoardAsStringBoardtoTerminal(board : Coordinate[] = this.#board) {
+        
+        console.log(this.printBoardAsString(board)); 
+    }
+    printBoardAsString (board : Coordinate[] = this.#board) {
         let result = "";
         for( let i = 0; i < 64; i++) {
             const coord = board[i];
@@ -129,7 +133,7 @@ export class GameBoard {
             }
         }
         // mirrored board 
-        console.log(result); 
+        return result;
     }
     filterBoardbyDirection( direction : string, startingcoord: Coordinate, board = this.#board) : Coordinate[] {
         if (direction != "diagonal") {

@@ -9,8 +9,14 @@ services:
       - ./app/:/app
     ports:
       - 3002:3000
+      - 5173:5173
     expose:
       - 3000
+      - 5173
     tty: true
     command:
-      - /bin/sh
+      - /bin/bash
+      - -c
+      - |
+        cd chess_frontend/
+        deno task dev --host
