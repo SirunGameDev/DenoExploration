@@ -13,7 +13,10 @@
     width: 25px;
     transform: scale(-1, 1);
 }
-
+.gameboard > section > div > div {
+    min-height: 20px;
+    min-width: 20px;
+}
 .gameboard > section > div[color="b"] {
     background-color: brown;
 }
@@ -32,4 +35,9 @@
     background-color: yellowgreen;
 }
 
-
+.gameboard > section > div >  div.Green{
+    background-color: green;
+}
+.gameboard > section > div.Red{
+    background-color: red;
+}

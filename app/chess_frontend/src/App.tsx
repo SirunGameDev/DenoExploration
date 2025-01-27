@@ -5,30 +5,39 @@ import { useState } from 'react'
 // @ts-expect-error Unable to infer type at the moment
 import reactLogo from './assets/react.svg'
 import {GameBoard} from '../../Chess/Model/GameBoard.ts'
+import ChessGame from './ChessGame.tsx'
 function App() {
   const [count, setCount] = useState(0)
-  const GameBoardObj = new GameBoard();
-  const GameBoardPrintString = GameBoardObj.printBoardAsString();
-  const GameBoardJSON = GameBoardObj.getBoard();
-  const GameBoardJSONString = JSON.stringify(GameBoardJSON);
-  function printFigure(PieceObject, field) {
-    if ("E" == PieceObject) {
-      return
-    }
-    let piece = field.getPiece();
-    return <div color={piece.getColor()}>{piece.getSymbol()}</div>
+  const [ChessGameActive, setChessGameActive] = useState(false);
+  const [StartChessGamePending, setStartChessGamePending] = useState(true);
+  const [EndChessGame, setEndChessGame] = useState(false);
+  const [GameBoardState, setGameBoardState] = useState({});
+  function startChessGame() {
+    let GameBoardObj = new GameBoard();
+    setGameBoardState(GameBoardObj);
+    setStartChessGamePending(false);
+    setChessGameActive(true);
+
   }
-  function PrintBoard(GameBoardJSON) {
-    const fields = [];
-    for (let i = GameBoardJSON.length-1; i >= 0; i--) {
-      const field = GameBoardJSON[i];
-      fields.push(
-        <div id={field.comment} horizontal={field.horizontal} vertical={field.vertical} color={field.color}>
-           {printFigure(field.getFilling(), field)}
-        </div>
-      )
-    }
-    return <section>{fields}</section>
+  function ChessGameField({StartChessGamePending, ChessGameActive, EndChessGame}) {
+    return (
+      <>
+      <div>
+      {StartChessGamePending ? (
+        <button onClick={startChessGame}>Neues Spiel</button>
+        ) : ( 
+        <div>Viel Spaß</div>
+        )}
+
+      {ChessGameActive ? (
+        <ChessGame
+        GameBoardObjData = {GameBoardState}
+        setGameBoardState = {setGameBoardState} />
+      ) :  (
+          <></>
+      )}  
+    </div>
+  </>)
   }
 
   return (
@@ -38,12 +47,13 @@ function App() {
         <button onClick={() => setCount((count) => count + 1)}>
           count is {count}
         </button>
+      </div>
+      <div><ChessGameField
+                        StartChessGamePending = {StartChessGamePending}
+                        ChessGameActive = {ChessGameActive}
+                        EndChessGame = {EndChessGame}
+                        /> </div>
 
-      </div>
-      <div className="gameboard">
-        Chess-Board:
-        {PrintBoard(GameBoardJSON)}
-      </div>
     </>
   )
 }
